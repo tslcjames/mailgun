@@ -1,5 +1,13 @@
 defmodule Mailgun.Client do
 
+  defmacro __using__([]) do
+    quote do
+      def send_email(email) do
+        env = Application.get_all_env(:mailgun)
+        unquote(__MODULE__).send_email(env, email)
+      end
+    end
+  end
   defmacro __using__(config) do
     quote do
       @conf unquote(config)
